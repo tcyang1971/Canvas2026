@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
 fun CanvasScreen(modifier: Modifier = Modifier) {
 
     var CanvasWidth by remember { mutableStateOf(0f) }
-    var CamvaHeight by remember { mutableStateOf( 0f ) }
+    var CanvasHeight by remember { mutableStateOf( 0f ) }
 
     var minionsX by remember { mutableStateOf(0f) }
     var minionsY by remember { mutableStateOf(0f) }
@@ -67,6 +67,12 @@ fun CanvasScreen(modifier: Modifier = Modifier) {
             delay(100L) // 0.1 秒
             minionsX += 5
             minionsY += 10
+
+            // 判斷是否超出邊界（可加入圖片寬高 offset 讓它完全消失後才重置）
+            if (minionsX > CanvasWidth || minionsY >CanvasHeight) {
+                minionsX = 0f
+                minionsY = 0f
+            }
         }
     }
 
@@ -92,7 +98,7 @@ fun CanvasScreen(modifier: Modifier = Modifier) {
             )
 
             CanvasWidth = size.width
-            CamvaHeight = size.height
+            CanvasHeight = size.height
 
             drawLine(
                 Color.Red,
@@ -113,7 +119,7 @@ fun CanvasScreen(modifier: Modifier = Modifier) {
 
 
         Column {
-            Text("畫布寬度 $CanvasWidth, 長度 $CamvaHeight")
+            Text("畫布寬度 $CanvasWidth, 長度 $CanvasHeight")
 
             Button (
                 onClick = { gameOver = !gameOver}
